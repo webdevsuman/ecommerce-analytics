@@ -3,6 +3,7 @@ import morgan from "morgan";
 import helmet from "helmet";
 import cors from "cors";
 import apiRouter from "./routes/index.js";
+import { errorHandler, notFoundHandler } from "./middlewares/error.middleware.js";
 
 const app = express();
 
@@ -38,5 +39,10 @@ app.use(
 );
 
 app.use("/api", apiRouter);
+
+// 404 Handler for undefined routes
+app.use(notFoundHandler);
+// Global Error-Handling Middleware (Must be last)
+app.use(errorHandler);
 
 export default app;
